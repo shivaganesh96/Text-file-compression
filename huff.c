@@ -34,13 +34,8 @@ return ;
     {
       holder = ch;
 
-      // printf("%c %d\n",holder,holder);
       a[holder]++;
-      //  if(holder> 127)
-      //	{
-      //  printf("\nPrinting HERE");
-      //  printf("\n %d : %ld",holder,a[holder]);
-      //    }
+      
     
 
       ch = fgetc(src);  
@@ -102,22 +97,6 @@ lnode *PQ_enqueue(lnode **pq, const int new1,const unsigned char cha,int (*cmp_f
 }
 
 
-/*void printlist(lnode * head,char * out)
-  {
-  FILE * fptr;
-  fptr = fopen(out,"w");
-  lnode * cur;
-  cur = head;
-  while(cur != NULL)
-  {
-  fprintf(fptr,"%c:%d",cur->ch,cur->ptr);
-  fprintf(fptr,"->");
-  cur = cur->next;
-  }
-  fprintf(fptr,"NULL");
-  fputc('\n',fptr);
-  fclose(fptr);
-  }*/
 
 lnode * takelist(long a[])
 {
@@ -131,8 +110,7 @@ lnode * takelist(long a[])
 	  PQ_enqueue(&head,a[i],ch,&compare,&charcmp);
 	}
     }
-  //PQ_enqueue(&head,1,3,&compare,&charcmp);
-  //  printlist(head,output);
+
   return head;
 }
 
@@ -198,11 +176,10 @@ void print_tree(lnode * t,long a[],int i,table_node * table[])
       table[t->ch] = (table_node *)malloc(sizeof(table_node));
       table[t->ch]->val = 0x00;
       table[t->ch]->tracker = i;
-      //fprintf(fptr,"%c:",t->ch);
-  // printf("%c : ",t->ch);
+
       for(l=0;l<i;l++)
 	{
-  // printf("%ld",a[l]);
+
 	  if(a[l]==1)
 	    {
               table[t->ch]->val = table[t->ch]->val << 1;
@@ -216,8 +193,7 @@ void print_tree(lnode * t,long a[],int i,table_node * table[])
 	      table[t->ch]->val = table[t->ch]->val <<1;
 	    }
 	}
-// printf("\n");
-      //  table[t->ch]->val = val<<(16-tracker);
+
       return;
     }
   a[i]=0;
@@ -255,8 +231,7 @@ lnode * organize(lnode * head,table_node * table[],long a[])
       enqueue(&t,new,&compare);
     }
   head = t;
-  //  printf("\n final: %d left: %d right: %d\n",t->ptr,t->left->ptr,t->right->ptr);
-  //int a[t->ptr] ;
+
   print_tree(t,a,0,table);
   
   return(head);
@@ -297,7 +272,7 @@ void convert(FILE * rptr,FILE * fptr)
 	    	{ 	
 				
 		  fputc(final,fptr);
-      //printf("%x\n",final);
+ 
 
 		  final = 0x00;count = 0;
 	    	}
@@ -312,7 +287,7 @@ void convert(FILE * rptr,FILE * fptr)
 	    	{ 
 				
 		  fputc(final,fptr);
-      //printf("%x\n",final);
+
 			
 		  final = 0x00;count = 0;
 	    	}
@@ -342,7 +317,7 @@ void convert(FILE * rptr,FILE * fptr)
 
 	  check2 = 0;
 	  fputc(final,fptr);  
-    //printf("%x\n",final);
+  
 
 	  final = 0x00; 
 	  final =final|leftover; 
@@ -356,7 +331,7 @@ void convert(FILE * rptr,FILE * fptr)
     {
       final= final|0x00;
       fputc(final,fptr);
-      //printf("%x\n",final );
+    
     }
 }
 //***********************************************************************
@@ -374,7 +349,7 @@ void convert_body(FILE * fptr,FILE * out,table_node * table[])
   int count = 0;
   while(!feof(fptr))
     {
-       // printf("fcghfufjghj\n");
+     
       if(count+table[ch]->tracker <= 32) // when lesser than or equal to 16 bits are filled in the short int
 	{
 	  hold = hold | ((table[ch]->val)<<(32-count-table[ch]->tracker));
@@ -388,9 +363,7 @@ void convert_body(FILE * fptr,FILE * out,table_node * table[])
 	}
       if(count == 32)
 	{
-   // printcheck(hold);
-    // printf("%hu\n",hold);
-    // printf("%x\n",hold);
+  
     unsigned char badu  = hold>>24;
     fputc(badu,out);
 badu = (hold & 0x00ff0000)>>16;
@@ -400,9 +373,7 @@ fputc(badu,out);
     badu = hold & 0x000000ff;
     fputc(badu,out);
 
-    // printf("%x",hold);
-
-//	  fprintf(out,"%x",hold);
+ 
   
 
       count = 0;
@@ -415,20 +386,17 @@ fputc(badu,out);
       ch = fgetc(fptr);
 }
   //MANUALY ADDING PSEUDO EOF
-      // printf("%d\n",count );
+      
 
   unsigned long end = table[3]->val;
   int t=2;
   while(t != 0)
     {
-// printf ("entering");
-      // printf("%d\n",count );
+
       if(count+table[3]->tracker <= 32)
 	{
 	  hold = hold | ((end)<<(32-count-table[3]->tracker));
-   // printcheck(hold);
-    // printf("%hu\n",hold);
-    // printf("%x\n",hold);
+
     unsigned char badu  = hold>>24;
     fputc(badu,out);
 badu = (hold & 0x00ff0000)>>16;
@@ -447,9 +415,7 @@ fputc(badu,out);
 	  leftover = count + table[3]->tracker - 32;
 	  hold = hold | ((end)>>leftover); 
 
-			//printcheck(hold);
-      // printf("%hu\n",hold);
-      // printf("%x\n",hold);
+		
        unsigned char badu  = hold>>24;
     fputc(badu,out);
 badu = (hold & 0x00ff0000)>>16;
@@ -459,7 +425,7 @@ fputc(badu,out);
     badu = hold & 0x000000ff;
     fputc(badu,out);
 
-    // fprintf(out,"%x",hold);
+    
 
 
 	    count = 32;
@@ -469,7 +435,7 @@ fputc(badu,out);
 	}
       if(count == 32)
 	{
-		//printcheck(hold);
+		
       
         unsigned char badu  = hold>>24;
     fputc(badu,out);
@@ -486,27 +452,7 @@ fputc(badu,out);
     }
 }
 //***********************************************
-void printcheck(unsigned short hold)
-{;
 
-// unsigned short mask = 0x01;
-// int count = 15;
-// while(count >= 0)
-// {
-// unsigned short temp = hold>>count;
-// temp = temp & mask;
-// if(temp == 1)
-// {
-// printf("1");
-// }
-// else
-// {
-// printf("0");
-// }
-// count--;
-// }
-// printf("\n");
-}
 
 
 
@@ -540,14 +486,13 @@ void destroystuff(lnode * head)
   int main(int argc, char ** argv)
   {
 
-//  double cstart, cend;
 
 
     table_node * table[256];
 
     long a[256] = {0};
     lnode * head;
-   // cstart = (double) clock();
+
     countchar(argv[1],a);
  
  char * string = (char*)malloc(sizeof(argv[1])+6);
@@ -568,19 +513,15 @@ string = strcat(string,".huff");
     FILE * ptr = fopen(string,"wb");
     convert(rptr,ptr);
     fclose(rptr);
-    //fclose(ptr);
-   // FILE * output = fopen("output.txt","a");
+
     FILE * fptr = fopen(argv[1],"r");
     convert_body(fptr,ptr,table);
-   /* cend = (double) clock();
-        printf("\n");
-        printf(" Elapsed Time (sec): %f\n", (cend - cstart)/CLOCKS_PER_SEC);*/
-   // fclose(output);
+
     fclose(fptr);
     fclose(ptr);
-    //remove("lala.txt");
+    remove("lala.txt");
     destroystuff(head);
-    // free(head);
+    
     return 1;
 
   }
