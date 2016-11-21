@@ -140,30 +140,7 @@ lnode * enqueue(lnode ** pq,lnode * node,int (*cmp_fn)(const int,const int))
   *pq = wall.next;
   return node;
 }
-/*
-  void display(char * out,int a[],char ch,int i)
-  {
- 
-  FILE * fptr;
-  fptr = fopen(out,"a+");
-  fprintf(fptr,"%c:",ch);
-  // printf("\n %c: ",ch);
-  int k=0;char hold;
 
-  for(k=0;(k<i);k++)
-  {
- 
-  hold = a[k] + '0';
-  // printf(" %d ",a[k]);
-  fputc(hold,fptr);
-  //      fprintf(fptr,"%d",a[k]);
-  k++;
-  }
-  // }
-  fputc('\n',fptr);
-  // printf("\n");
-  fclose(fptr);
-  }*/
 
 
 
